@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block hero %}
+
+
+<div class="hero-container">
+
+
+  <form method="POST" class=" bg-light p-4">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="Email1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" name="email" required>
+      {% comment %} <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> {% endcomment %}
+    </div>
+    <div class="mb-3">
+      <label for="Password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="Password" name="password" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Log in</button>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% comment %} <div> already have an account? <a href=" {% url 'login' %}">Log in</a> </div> {% endcomment %}
+    <div>Have not an account? <a href=" {% url 'signin' %}"> Create account</a> </div>
+  </form>
+</div>
+{% endblock hero %}
