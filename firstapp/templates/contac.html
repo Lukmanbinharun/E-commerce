@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %} Contact us{% endblock title %}
+
+{% block hero %}
+
+<div class="hero-container">
+ 
+  <h1>You can contac with us</h1>
+  
+</div>
+
+{% endblock hero %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-success " role="alert">
+    {% for mess in messages %}
+    {{mess}}
+    <br>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+<form method="POST" class=" bg-light p-5 m-5">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="Email1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" name="email" value="{{user.email}}"  required>
+    </div>
+    <div class="mb-3">
+        <label for="Name" class="form-label"> Name </label>
+        <input type="Name" class="form-control" id="Name"  name="Name"value="{{user.get_full_name}}" required>
+      </div>
+      <div class="mb-3">
+        <label for="Pnumber" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="Pnumber"  name="Pnumber">
+      </div>
+    <div class="mb-3">
+      <label for="dese" class="form-label"> How can we help you?</label>
+      <textarea cols="1" rows="5"
+      <input type="text" class="form-control" id="dese" name="dese"  required>
+    </textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+   
+  </form>
+
+{% endblock body %}

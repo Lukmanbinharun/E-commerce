@@ -37,7 +37,7 @@ def userlogin(request):
                 login(request=request, user=user)
                 return redirect('home')
             else:
-                messages.info(request,'Email or Password is incorrect')
+                messages.warning(request,'Email or Password is incorrect')
         return render(request,'login.html')
     return redirect('home')
     
