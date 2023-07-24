@@ -18,6 +18,29 @@ def home(request):
         return render(request,'index.html',parms)
     return redirect('login')
 
+def is_match(item,query):
+    if query in item.product_name or query in item.catagory or query in item.dese:
+        return True
+    return False
+
+def search(request):
+    query = request.GET.get('Search')
+    if request.user.is_authenticated:
+        allproduct = []
+        catproducts = Product.objects.values('catagory', 'id')
+        # cats = [ item['catagory'] for item in catproducts ]
+        cats = {item['catagory'] for item in  catproducts}
+        for cat in cats:
+            prodtamp = Product.objects.filter(catagory = cat)
+            prod = [item for item in prodtamp if is_match(item, query)]
+            n = len(prod)
+            nSlider = n // 4 + ceil((n/4) - (n // 4))
+            allproduct.append([prod ,(1,nSlider), nSlider])
+        parms = {'allproduct' : allproduct}
+        return render(request,'index.html',parms)
+    return redirect('login')
+
+
 def contac(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
