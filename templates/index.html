@@ -26,16 +26,44 @@
         
       
     </div>
-    <nav class="navbar navbar-light bg-light">
+    {% comment %} <nav class="navbar navbar-light bg-light"> {% endcomment %}
     <form class="form-inline" action="/search" method = "GET">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search by product,cat.." aria-label="Search" name = "Search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search by product,catagory or discription" aria-label="Search" name = "Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-    </nav>
+    {% comment %} </nav> {% endcomment %}
+
+  <nav class="navbar navbar-light bg-dark mx-auto my-5 w-50 p-5">
+    <p>Search by One or multipool vealu</p>
+  <form class="form-inline" action="/multisearch" method = "GET">
+    <input class="form-control mr-sm-2" type="search" placeholder="Product name" aria-label="Search" name = "product_name">
+    <!-- <input class="form-control mr-sm-2" type="search" placeholder=" Product catagory" aria-label="Search" name = "catagory"> -->
+
+    <label for="cars">Choose a catagory:</label>
+    <select id="cars" name="catagory">
+      <option ></option>
+      <option value="T-shirt">T-shirt</option>
+      <option value="Mobile">Mobile</option>
+      <option value="Shirt">Shirt</option>
+      <option value="Watch">Watch</option>
+    </select>
+    <br>
+    <label class="form-label" for="typeNumber">Min priset</label>
+    <input type="number" id="typeNumber" class="form-control" name="minval" placeholder="Min price" />
+    <br>
+    <br>
+    <label class="form-label" for="typeNumber">Max prise</label>
+    <input type="number" id="typeNumber" class="form-control" name="maxval" placeholder="Max price" />
+    <br>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  </nav>
 
     {% for product, range, nSlider in allproduct  %}
+    {% if product %}
     <br><br>
     <h3 class=" my-3 text-center  text-success bg-light"> {{product.0.catagory}} Flashel</h3>
+    {% endif %}
 
     <div class=" container">
       <div class="row">
@@ -45,13 +73,13 @@
 
           <img src="/media/{{i.image}}" class=" card-img-top h-75 w-75" alt=" Not found">
           <div class="card-body">
-            <h5 class=" card-title" id=" namepr{{i.id}}">
-              {{i.product_name}}
+            <h5 class=" card-title" > 
+              <h3 class="namepr" id="namepr{{i.id}}"> {{i.product_name}} </h3>
 
               <p class=" card-text"> {{i.dese|slice:"0:50"}} </p>
               <h6 class=" card-title"> Price: {{i.prise}} </h6>
               <span class="  divpr" id=" divpr{{i.id}}">
-                <button id=" pr{{i.id}}" class=" btn btn-success"> Add to card</button>
+                <button id=" pr{{i.id}}" class=" btn btn-success cart"> Add to card</button>
               </span>
               <a href="/media/{{i.image}}">
                 <button class=" btn btn-success"> View</button>
@@ -75,3 +103,35 @@
 
 
 {% endblock body %}
+{% block js %}
+<script>
+  console.log("working");
+  if(localStorage.getItem('cart')==null){
+    var cart = {};
+  }
+  else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length
+  }
+  $('.cart').click(function(){
+    console.log('clicked');
+    var idstr = this.id.toString()
+    //var name = this.product_name
+    //console.log(idstr);
+    if( cart[idstr] != undefined){
+      cart[idstr][0] = cart[idstr][0] + 1;
+    }
+    else{
+      qty = 1;
+      //var name = document.getElementById('name'+idstr).innerHTML;
+      var names = 'product' + idstr;
+      cart[idstr] = [qty, names]
+    }
+    //console.log(cart)
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length
+  }
+
+  )
+</script>
+{% endblock js %}

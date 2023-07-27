@@ -64,6 +64,7 @@
               <li><a href="#">Menu</a></li>
             </ul>
           </li>
+          <li><a class="nav-link scrollto " href="#">cart(<span id="cart">0</span>)</a></li>
          
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -165,6 +166,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="{%static  'assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
   <script src="{%static  'assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
   <script src="{%static  'assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
@@ -173,6 +175,7 @@
 
   <!-- Template Main JS File -->
   <script src="{%static  'assets/js/main.js'%}"></script>
+  {% block js %}{% endblock js %}
 
 </body>
 
