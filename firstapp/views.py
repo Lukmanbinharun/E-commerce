@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from . models import contact, Product
+from django.shortcuts import render, redirect,HttpResponse
+from . models import contact, Product,order
 from django.contrib import messages
 from math import ceil
 # Create your views here.
@@ -97,3 +97,16 @@ def about(request):
 
 def chickout(request):
     return render(request,'chickout.html')
+
+def orderfinish(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            item = request.POST.get('item')
+            Name = request.POST.get('Name')
+            email = request.POST.get('email')
+            Pnumber = request.POST.get('pnumber')
+            address = request.POST.get('address')
+            myorder = order(item = item,email=email,Name=Name, Phone_number = Pnumber, address=address)
+            myorder.save()
+        return HttpResponse(" <h3>Your Responce has been recoted <h3> We will with contac you")
+    return redirect('login')

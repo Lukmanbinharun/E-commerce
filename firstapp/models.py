@@ -23,3 +23,16 @@ class Product(models.Model):
     
     def __str__(self) -> str:
         return self.product_name
+    
+    
+
+class order(models.Model):
+    id = models.AutoField(primary_key= True)
+    item = models.CharField(max_length=1000)
+    email = models.EmailField()
+    Name = models.CharField(max_length=30)
+    address = models.TextField(max_length=500)
+    Phone_number = models.CharField(max_length=15, blank=True, null=True)
+    
+    def __str__(self) -> str:
+        return self.Name
